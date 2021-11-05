@@ -8,35 +8,51 @@ There are 4 operations that can be applied. Each operation uses data storage and
 There are three data storage inputs, along with two scoreboard inputs. Below are their terminologies (will be used further in this document), as well as their uses and the command to set them.
 
 `Source`: This is a list of the lore that will be modified, typically this would be extracted directly from the item being modified, but can be set manually to a desired set of lore.
-```data modify storage gm4_lore:temp Source set from <...>```
+```mcfunction
+data modify storage gm4_lore:temp Source set from <...>
+```
 
 `Target`: This is a single json item (i.e. a single 'line' of lore) that will be found during the operations. This sets the line of lore to be searched, removed, inserted after, or replaced.
-```data modify storage gm4_lore:temp Target set from <...>```
+```mcfunction
+data modify storage gm4_lore:temp Target set from <...>
+```
 
 `Input`: This is list of the lore that will be inserted or replaced. This should not be set when simply searching or removing and will be ignored if set while using the search of remove operation.
-```data modify storage gm4_lore:temp Input set from <...>```
+```mcfunction
+data modify storage gm4_lore:temp Input set from <...>
+```
 
 `start`: This is an integer that determines where the operation will start. It is essentially the offset for the operations. More specific use cases can be found under each specific operation description.
-```scoreboard players set $start gm4_lore <value>```
+```mcfunction
+scoreboard players set $start gm4_lore <value>
+```
 
 `extra`: This is an integer that determines the extra lines to be removed after the initial line. This is only used during the remove operation and will be ignored otherwise. More specific use cases can be found under the remove operation description.
-```scoreboard players set $extra gm4_lore <value>```
+```mcfunction
+scoreboard players set $extra gm4_lore <value>
+```
 
 ### Outputs
 There are three outputs to work to work with after running an operation. Each operation uses the three outputs differently, which can be found under the specific operation description. Below are their terminologies (will be used further in this document), as well as their general uses and the command to get them.
 
 `Source`: This is the modified version of the input Source.
-```data get storage gm4_lore:temp Source```
+```mcfunction
+data get storage gm4_lore:temp Source
+```
 
 `Dump`: This is extra info about the operation that was used, usually the line of lore that was modified.
-```data get storage gm4_lore:temp Dump```
+```mcfunction
+data get storage gm4_lore:temp Dump
+```
 
 `index`: This is the index of the lore where the operation took place.
-```scoreboard players get $index gm4_lore```
+```mcfunction
+scoreboard players get $index gm4_lore
+```
 
 
 ### Operations
-Below are the four operations and how to utilize them.
+Below are the four operations and how to utilize them. Note that every operation requires `Source` and `Target` to be set.
 
 #### Remove
 Removes a specified line of lore
@@ -44,7 +60,9 @@ Removes a specified line of lore
 - `start` determines where the removal will start when it finds the `Target` line; this can be negative to start removing before the line or positive to start removing after the line. Defaults to 0.
 - `extra` determines how many more lines to remove after the first target line is removed. Must be positive. Defaults to 0. If set to -1, every line after the first target line will be removed.
 
-- Command to run: ```function #gm4_lore:remove```
+```mcfunction
+function #gm4_lore:remove
+```
 
 - `Source` is the updated `Source` without the `Target` line.
 - `Dump` is the removed line of lore.
@@ -55,7 +73,9 @@ Removes a specified line of lore
 Finds the index of a specified line of lore
 - `start` determines where the search will start; must be a positive number. Defaults to 0.
 
-- Command to run: ```function #gm4_lore:search```
+```mcfunction
+function #gm4_lore:search
+```
 
 - `Source` remains unchanged.
 - `Dump` is the found line of lore (`Target`).
@@ -68,7 +88,9 @@ Inserts lines of lore after a specified line of lore
 - `Input` determines the lines of lore to add after the `Target` line
 - `start` determines where the insertion will start when it finds the `Target` line; this can be negative to insert before the line or positive to insert after the line. Defaults to 0.
 
-- Command to run: ```function #gm4_lore:insert```
+```mcfunction
+function #gm4_lore:insert
+```
 
 - `Source` is the updated `Source` with the added lore.
 - `Dump` is the added lines of lore (`Input`).
@@ -81,7 +103,9 @@ Replaces a specified line of lore with one or more new lines of lore
 - `Input ` determines the lines of lore to replace the `Target` line
 - `start` determines where the search for the `Target` line will start; must be a positive number. Defaults to 0.
 
-- Command to run: ```function #gm4_lore:replace```
+```mcfunction
+function #gm4_lore:replace
+```
 
 - `Source` is the updated `Source` with the replaced lore
 - `Dump` is the replaced line of lore (`Target`)
